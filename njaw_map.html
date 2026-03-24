@@ -1,0 +1,95 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--font-sans,sans-serif)}
+#map{width:100%;height:580px}
+.legend{background:white;padding:10px 14px;border-radius:8px;border:0.5px solid #ccc;font-size:12px;line-height:1.8}
+.legend-row{display:flex;align-items:center;gap:7px}
+.dot{width:12px;height:12px;border-radius:50%;display:inline-block;flex-shrink:0}
+.popup-title{font-weight:600;font-size:13px;margin-bottom:4px}
+.popup-row{font-size:12px;color:#444;margin:1px 0}
+.popup-badge{display:inline-block;font-size:11px;font-weight:600;padding:1px 7px;border-radius:4px;margin-top:4px}
+</style>
+
+<div id="map"></div>
+
+<script>
+const map = L.map('map').setView([40.15, -74.55], 8);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '© OpenStreetMap contributors',
+  maxZoom: 18
+}).addTo(map);
+
+const utilities = [
+  {name:"Camden City Water Dept\n(NJ American Water)", pwsid:"NJ0408001", chem:"PFOS", max:12.9, mult:"3.2×", pop:"~71,000", county:"Camden", lat:39.934, lng:-75.1278},
+  {name:"NJAW — Atlantic County", pwsid:"NJ0119002", chem:"PFOA", max:10.9, mult:"2.7×", pop:"112,076", county:"Atlantic", lat:39.3814, lng:-74.576},
+  {name:"NJAW — Short Hills", pwsid:"NJ0712001", chem:"PFOA", max:9.1, mult:"2.3×", pop:"217,230", county:"Essex", lat:40.7429, lng:-74.3538},
+  {name:"NJAW — Coastal North", pwsid:"NJ1345001", chem:"PFOA", max:7.5, mult:"1.9×", pop:"375,857", county:"Monmouth & Ocean", lat:40.3258, lng:-74.0714},
+  {name:"NJAW — Raritan", pwsid:"NJ2004002", chem:"PFOA", max:7.5, mult:"1.9×", pop:"736,791", county:"Somerset, Middlesex,\nHunterdon, Morris, Union", lat:40.5479, lng:-74.5634},
+  {name:"NJAW — ITC (Mount Olive)", pwsid:"NJ1427017", chem:"PFOA", max:7.3, mult:"1.8×", pop:"~1,500–2,000", county:"Morris", lat:40.8773, lng:-74.7222},
+  {name:"NJAW — Washington/Oxford", pwsid:"NJ2121001", chem:"PFOS", max:7.1, mult:"1.8×", pop:"10,133", county:"Warren", lat:40.7568, lng:-74.9829},
+  {name:"NJAW — Shorelands", pwsid:"NJ1339001", chem:"PFOA", max:6.5, mult:"1.6×", pop:"31,908", county:"Monmouth", lat:40.1749, lng:-74.1652},
+  {name:"NJAW — Union Beach", pwsid:"NJ1350001", chem:"PFOA", max:6.2, mult:"1.5×", pop:"5,380", county:"Monmouth", lat:40.4394, lng:-74.1793},
+  {name:"NJAW — Mount Holly", pwsid:"NJ0323001", chem:"PFOA", max:4.8, mult:"1.2×", pop:"34,733", county:"Burlington", lat:39.9932, lng:-74.7856},
+  {name:"NJAW — Liberty (Elizabeth)", pwsid:"NJ2004001", chem:"PFOA", max:4.5, mult:"1.1×", pop:"128,124", county:"Union", lat:40.664, lng:-74.2107},
+  {name:"NJAW — Little Falls", pwsid:"NJ1605001", chem:"PFOA", max:4.5, mult:"1.1×", pop:"16,675", county:"Passaic", lat:40.8787, lng:-74.2126},
+  {name:"NJAW — Logan", pwsid:"NJ0809002", chem:"PFOA", max:4.2, mult:"1.0×", pop:"3,762", county:"Gloucester", lat:39.7373, lng:-75.2732}
+];
+
+function getColor(max){
+  if(max >= 9) return '#E24B4A';
+  if(max >= 6) return '#EF9F27';
+  return '#639922';
+}
+
+function getRadius(max){
+  if(max >= 10) return 18;
+  if(max >= 7)  return 14;
+  if(max >= 5)  return 11;
+  return 9;
+}
+
+utilities.forEach(u => {
+  const color = getColor(u.max);
+  const r = getRadius(u.max);
+
+  const marker = L.circleMarker([u.lat, u.lng], {
+    radius: r,
+    fillColor: color,
+    color: '#fff',
+    weight: 2,
+    opacity: 1,
+    fillOpacity: 0.88
+  }).addTo(map);
+
+  const badgeColor = u.max >= 9 ? '#A32D2D' : u.max >= 6 ? '#854F0B' : '#3B6D11';
+  const badgeBg   = u.max >= 9 ? '#FCEBEB' : u.max >= 6 ? '#FAEEDA' : '#EAF3DE';
+
+  marker.bindPopup(`
+    <div class="popup-title">${u.name.replace('\n','<br>')}</div>
+    <div class="popup-row"><b>PWSID:</b> ${u.pwsid}</div>
+    <div class="popup-row"><b>County:</b> ${u.county.replace('\n','<br>')}</div>
+    <div class="popup-row"><b>Population:</b> ${u.pop}</div>
+    <div class="popup-row"><b>Contaminant:</b> ${u.chem}</div>
+    <div class="popup-row"><b>Max conc.:</b> ${u.max} ng/L</div>
+    <span class="popup-badge" style="background:${badgeBg};color:${badgeColor}">${u.mult} EPA MCL</span>
+  `, {maxWidth: 220});
+});
+
+const legend = L.control({position:'bottomright'});
+legend.onAdd = () => {
+  const d = L.DomUtil.create('div','legend');
+  d.innerHTML = `
+    <b style="font-size:12px">Exceedance level</b><br>
+    <div class="legend-row"><span class="dot" style="background:#E24B4A"></span> &gt; 2× MCL — high</div>
+    <div class="legend-row"><span class="dot" style="background:#EF9F27"></span> 1.3–2× MCL — moderate</div>
+    <div class="legend-row"><span class="dot" style="background:#639922"></span> 1.0–1.2× MCL — marginal</div>
+    <div style="margin-top:4px;font-size:11px;color:#666">Circle size = concentration level<br>Click pin for details</div>
+  `;
+  return d;
+};
+legend.addTo(map);
+</script>
