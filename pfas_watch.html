@@ -87,7 +87,12 @@ body {
 .sb-btn:hover  { background: #1e3058; }
 .sb-btn.active { background: #1d4ed8; color: #fff; font-weight: 600; }
 
-/* Status dots */
+/* Sub-buttons inside dropdown — slightly indented */
+.sb-sub {
+  padding-left: 22px !important;
+  font-size: 10px !important;
+  background: #0d1b30;
+}
 .dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
 .dot-red    { background: #f87171; }
 .dot-orange { background: #fb923c; }
@@ -220,78 +225,35 @@ body {
     <p>NJ American Water · All 36 Utilities · UCMR5 + CCR 2024</p>
   </div>
 
-  <!-- Dashboard pages -->
+  <!-- 4 main nav items -->
   <div class="sb-group">
     <div class="sb-label">Dashboard</div>
-    <button class="sb-btn active" data-panel="overview"  onclick="nav('overview',  this)">📊 Overview (All 36)</button>
-    <button class="sb-btn"        data-panel="mcltable"  onclick="nav('mcltable',  this)">📋 MCL Exceedances (19)</button>
-    <button class="sb-btn"        data-panel="map"       onclick="nav('map',       this)">🗺 Interactive Map</button>
-  </div>
+    <button class="sb-btn active" data-panel="overview" onclick="nav('overview', this)">📊 Overview (All 36)</button>
+    <button class="sb-btn" data-panel="mcltable"        onclick="nav('mcltable', this)">📋 MCL Exceedances (19)</button>
+    <button class="sb-btn" data-panel="map"             onclick="nav('map',      this)">🗺 Interactive Map</button>
 
-  <!-- UCMR5 — exceeds MCL -->
-  <div class="sb-group">
-    <div class="sb-label">UCMR5 — Exceeds MCL (13)</div>
-    <button class="sb-btn" data-panel="camden"       onclick="nav('camden',       this)"><span class="dot dot-red"></span>Camden City (NJ0408001)</button>
-    <button class="sb-btn" data-panel="atlantic"     onclick="nav('atlantic',     this)"><span class="dot dot-red"></span>Atlantic County (NJ0119002)</button>
-    <button class="sb-btn" data-panel="shorthills"   onclick="nav('shorthills',   this)"><span class="dot dot-red"></span>Short Hills (NJ0712001)</button>
-    <button class="sb-btn" data-panel="coastalnorth" onclick="nav('coastalnorth', this)"><span class="dot dot-red"></span>Coastal North (NJ1345001)</button>
-    <button class="sb-btn" data-panel="raritan"      onclick="nav('raritan',      this)"><span class="dot dot-red"></span>Raritan (NJ2004002)</button>
-    <button class="sb-btn" data-panel="itc"          onclick="nav('itc',          this)"><span class="dot dot-red"></span>ITC / Mt. Olive (NJ1427017)</button>
-    <button class="sb-btn" data-panel="washox"       onclick="nav('washox',       this)"><span class="dot dot-red"></span>Washington/Oxford (NJ2121001)</button>
-    <button class="sb-btn" data-panel="shorelands"   onclick="nav('shorelands',   this)"><span class="dot dot-orange"></span>Shorelands (NJ1339001)</button>
-    <button class="sb-btn" data-panel="unionbeach"   onclick="nav('unionbeach',   this)"><span class="dot dot-orange"></span>Union Beach (NJ1350001)</button>
-    <button class="sb-btn" data-panel="mountholly"   onclick="nav('mountholly',   this)"><span class="dot dot-orange"></span>Mount Holly (NJ0323001)</button>
-    <button class="sb-btn" data-panel="liberty"      onclick="nav('liberty',      this)"><span class="dot dot-orange"></span>Liberty/Elizabeth (NJ2004001)</button>
-    <button class="sb-btn" data-panel="littlefalls"  onclick="nav('littlefalls',  this)"><span class="dot dot-orange"></span>Little Falls (NJ1605001)</button>
-    <button class="sb-btn" data-panel="logan"        onclick="nav('logan',        this)"><span class="dot dot-orange"></span>Logan (NJ0809002)</button>
-  </div>
+    <!-- Exceed Graphs — collapsible dropdown -->
+    <button class="sb-btn" id="graphs-toggle" onclick="toggleGraphs(this)">
+      📈 Exceed Graphs (13)
+      <span id="graphs-arrow" style="margin-left:auto;font-size:10px;transition:transform .2s">▼</span>
+    </button>
 
-  <!-- UCMR5 — detected / no PFAS -->
-  <div class="sb-group">
-    <div class="sb-label">UCMR5 — Detected / No PFAS (6)</div>
-    <button class="sb-btn" data-panel="western"    onclick="nav('western',    this)"><span class="dot dot-green"></span>Delaware/Western (NJ0327001)</button>
-    <button class="sb-btn" data-panel="harrison"   onclick="nav('harrison',   this)"><span class="dot dot-gray"></span>Harrison (NJ0808001)</button>
-    <button class="sb-btn" data-panel="capemay"    onclick="nav('capemay',    this)"><span class="dot dot-gray"></span>Cape May C.H. (NJ0506010)</button>
-    <button class="sb-btn" data-panel="oceancity"  onclick="nav('oceancity',  this)"><span class="dot dot-gray"></span>Ocean City (NJ0508001)</button>
-    <button class="sb-btn" data-panel="pennsgrove" onclick="nav('pennsgrove', this)"><span class="dot dot-gray"></span>Penns Grove (NJ1707001)</button>
-    <button class="sb-btn" data-panel="roxbury"    onclick="nav('roxbury',    this)"><span class="dot dot-gray"></span>Roxbury (NJ1436002)</button>
-  </div>
-
-  <!-- CCR 2024 — exceeds MCL -->
-  <div class="sb-group">
-    <div class="sb-label">CCR 2024 — Exceeds MCL (6)</div>
-    <button class="sb-btn" data-panel="fourseasons" onclick="nav('fourseasons', this)"><span class="dot dot-red"></span>Four Seasons at Chester</button>
-    <button class="sb-btn" data-panel="westjersey"  onclick="nav('westjersey',  this)"><span class="dot dot-red"></span>West Jersey (NJ1427009)</button>
-    <button class="sb-btn" data-panel="shrewsbury"  onclick="nav('shrewsbury',  this)"><span class="dot dot-red"></span>Shrewsbury - AVMA</button>
-    <button class="sb-btn" data-panel="southorange" onclick="nav('southorange', this)"><span class="dot dot-orange"></span>South Orange Village</button>
-    <button class="sb-btn" data-panel="twinlakes"   onclick="nav('twinlakes',   this)"><span class="dot dot-orange"></span>Twin Lakes (NJ1803002)</button>
-    <button class="sb-btn" data-panel="salem"       onclick="nav('salem',       this)"><span class="dot dot-orange"></span>Salem (NJ1712001)</button>
-  </div>
-
-  <!-- CCR 2024 — detected below MCL -->
-  <div class="sb-group">
-    <div class="sb-label">CCR 2024 — Below MCL (2)</div>
-    <button class="sb-btn" data-panel="bridgeport" onclick="nav('bridgeport', this)"><span class="dot dot-green"></span>Bridgeport (NJ0809001)</button>
-    <button class="sb-btn" data-panel="frenchtown" onclick="nav('frenchtown', this)"><span class="dot dot-green"></span>Frenchtown (NJ1011001)</button>
-  </div>
-
-  <!-- CCR 2024 — not detected / NA -->
-  <div class="sb-group">
-    <div class="sb-label">CCR 2024 — Not Detected / NA (2)</div>
-    <button class="sb-btn" data-panel="belvidere"  onclick="nav('belvidere',  this)"><span class="dot dot-gray"></span>Belvidere (NJ2103001)</button>
-    <button class="sb-btn" data-panel="crossroads" onclick="nav('crossroads', this)"><span class="dot dot-gray"></span>Crossroads at Oldwick</button>
-  </div>
-
-  <!-- CCR 2024 — no data -->
-  <div class="sb-group">
-    <div class="sb-label">CCR 2024 — No Data (7)</div>
-    <button class="sb-btn" data-panel="deeprun"    onclick="nav('deeprun',    this)"><span class="dot dot-dark"></span>Deep Run (NJ1523002)</button>
-    <button class="sb-btn" data-panel="eggharbor"  onclick="nav('eggharbor',  this)"><span class="dot dot-dark"></span>Egg Harbor City (NJ0107001)</button>
-    <button class="sb-btn" data-panel="homestead"  onclick="nav('homestead',  this)"><span class="dot dot-dark"></span>Homestead (NJ0318002)</button>
-    <button class="sb-btn" data-panel="newegypt"   onclick="nav('newegypt',   this)"><span class="dot dot-dark"></span>New Egypt (NJ1523003)</button>
-    <button class="sb-btn" data-panel="strathmere" onclick="nav('strathmere', this)"><span class="dot dot-dark"></span>Strathmere (NJ0511001)</button>
-    <button class="sb-btn" data-panel="sunbury"    onclick="nav('sunbury',    this)"><span class="dot dot-dark"></span>Sunbury (NJ0329006)</button>
-    <button class="sb-btn" data-panel="vincentown" onclick="nav('vincentown', this)"><span class="dot dot-dark"></span>Vincentown (NJ0333004)</button>
+    <!-- Dropdown list — hidden by default -->
+    <div id="graphs-dropdown" style="display:none">
+      <button class="sb-btn sb-sub" data-panel="camden"       onclick="nav('camden',       this)"><span class="dot dot-red"></span>Camden City</button>
+      <button class="sb-btn sb-sub" data-panel="atlantic"     onclick="nav('atlantic',     this)"><span class="dot dot-red"></span>Atlantic County</button>
+      <button class="sb-btn sb-sub" data-panel="shorthills"   onclick="nav('shorthills',   this)"><span class="dot dot-red"></span>Short Hills</button>
+      <button class="sb-btn sb-sub" data-panel="coastalnorth" onclick="nav('coastalnorth', this)"><span class="dot dot-red"></span>Coastal North</button>
+      <button class="sb-btn sb-sub" data-panel="raritan"      onclick="nav('raritan',      this)"><span class="dot dot-red"></span>Raritan</button>
+      <button class="sb-btn sb-sub" data-panel="itc"          onclick="nav('itc',          this)"><span class="dot dot-red"></span>ITC / Mt. Olive</button>
+      <button class="sb-btn sb-sub" data-panel="washox"       onclick="nav('washox',       this)"><span class="dot dot-red"></span>Washington/Oxford</button>
+      <button class="sb-btn sb-sub" data-panel="shorelands"   onclick="nav('shorelands',   this)"><span class="dot dot-orange"></span>Shorelands</button>
+      <button class="sb-btn sb-sub" data-panel="unionbeach"   onclick="nav('unionbeach',   this)"><span class="dot dot-orange"></span>Union Beach</button>
+      <button class="sb-btn sb-sub" data-panel="mountholly"   onclick="nav('mountholly',   this)"><span class="dot dot-orange"></span>Mount Holly</button>
+      <button class="sb-btn sb-sub" data-panel="liberty"      onclick="nav('liberty',      this)"><span class="dot dot-orange"></span>Liberty/Elizabeth</button>
+      <button class="sb-btn sb-sub" data-panel="littlefalls"  onclick="nav('littlefalls',  this)"><span class="dot dot-orange"></span>Little Falls</button>
+      <button class="sb-btn sb-sub" data-panel="logan"        onclick="nav('logan',        this)"><span class="dot dot-orange"></span>Logan</button>
+    </div>
   </div>
 
 </div><!-- /sidebar -->
@@ -593,7 +555,15 @@ body {
      Also triggers chart rendering when a UCMR5 panel opens.
      ============================================================ -->
 <script>
-function nav(panelId, btn) {
+function toggleGraphs(btn) {
+  const dropdown = document.getElementById('graphs-dropdown');
+  const arrow    = document.getElementById('graphs-arrow');
+  const isOpen   = dropdown.style.display !== 'none';
+  dropdown.style.display = isOpen ? 'none' : 'block';
+  arrow.style.transform  = isOpen ? 'rotate(0deg)' : 'rotate(180deg)';
+}
+
+
   // hide all panels
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
   // deactivate all sidebar buttons
