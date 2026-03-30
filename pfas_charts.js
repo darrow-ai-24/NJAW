@@ -192,8 +192,9 @@
         pointStyle:       allDates.map(d => byDate[d]?.n > 1 ? 'star' : 'circle'),
         pointHoverRadius: 8,
         borderWidth:      2,
-        tension:          0.3,
-        spanGaps:         false, // gaps where entry point was not sampled
+        tension:          0,
+        showLine:         false, // dots only — no connecting lines between measurements
+        spanGaps:         false,
       };
     });
 
