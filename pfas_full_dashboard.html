@@ -168,20 +168,19 @@ tr.clickable:hover td{background:#f8faff;cursor:pointer}
         (1) <strong>EPA UCMR5</strong> (2023–2025) — federally mandated, standardized, lab-verified, applies to 19 of 36 utilities.
         (2) <strong>CCR 2024 Water Quality Reports</strong> — self-reported by utility, different methodology, applies to 17 utilities not in UCMR5. CCR PFAS values are ranges across all sampling points and are <em>not directly comparable</em> to UCMR5 measurements.
       </div>
-      <div class="sg sg6">
+      <!-- CHANGED: 6 cards → 3 cards -->
+      <div class="sg sg3">
         <div class="sc b"><div class="sv">36</div><div class="sl">Total NJAW utilities</div></div>
-        <div class="sc r"><div class="sv">13</div><div class="sl">UCMR5 exceed MCL</div></div>
-        <div class="sc r"><div class="sv">6</div><div class="sl">CCR 2024 exceed MCL</div></div>
-        <div class="sc y"><div class="sv">7</div><div class="sl">No CCR PFAS data</div></div>
-        <div class="sc g"><div class="sv">8</div><div class="sl">Below MCL / ND / NA</div></div>
-        <div class="sc p"><div class="sv">2</div><div class="sl">CCR detected, below MCL</div></div>
+        <div class="sc r"><div class="sv">19</div><div class="sl">Exceed MCL (13 UCMR5 + 6 CCR)</div></div>
+        <div class="sc g"><div class="sv">17</div><div class="sl">Below MCL / ND / No data</div></div>
       </div>
-      <div class="stitle">All 36 NJ American Water Utilities — Complete Status (click any row)</div>
+      <!-- CHANGED: Source moved to last column, title updated -->
+      <div class="stitle">All 36 NJ American Water Utilities — Sorted by Max Concentration (Highest → Lowest)</div>
       <div class="tw"><table>
         <thead><tr>
           <th>#</th><th>Utility Name</th><th>PWSID</th><th>County</th>
-          <th>Source</th><th>PFAS Contaminant</th><th>Max Conc. (ng/L)</th>
-          <th>× MCL</th><th>Est. Pop.</th><th>Status</th>
+          <th>PFAS Contaminant</th><th>Max Conc. (ng/L)</th>
+          <th>× MCL</th><th>Est. Pop.</th><th>Status</th><th>Source</th>
         </tr></thead>
         <tbody id="ovtb"></tbody>
       </table></div>
@@ -228,16 +227,13 @@ tr.clickable:hover td{background:#f8faff;cursor:pointer}
     <!-- METHODOLOGY -->
     <div id="panel-methodology" class="panel">
       <div class="stitle">🔬 Data Collection Methodology</div>
-
       <div class="ag" style="margin-bottom:13px">
         <div class="ac" style="grid-column:1/-1">
           <h3>📋 Overview</h3>
           <p>This dashboard combines data from three independent sources to provide a complete picture of PFAS contamination across all 36 NJ American Water utilities. Each source uses a different collection methodology, and results are <strong>not directly cross-comparable</strong> between sources.</p>
         </div>
       </div>
-
       <div class="ag" style="margin-bottom:13px">
-        <!-- SOURCE 1 -->
         <div class="ac">
           <h3 style="color:#1d4ed8">① EPA UCMR5 Dataset</h3>
           <ul>
@@ -250,7 +246,6 @@ tr.clickable:hover td{background:#f8faff;cursor:pointer}
             <li><strong>Reliability:</strong> Highest — fully standardized, lab-verified, independently audited</li>
           </ul>
         </div>
-        <!-- SOURCE 2 -->
         <div class="ac">
           <h3 style="color:#92400e">② CCR 2024 Water Quality Reports</h3>
           <ul>
@@ -264,36 +259,23 @@ tr.clickable:hover td{background:#f8faff;cursor:pointer}
           </ul>
         </div>
       </div>
-
       <div class="stitle">👥 Population Data Methodology</div>
       <div class="ag" style="margin-bottom:13px">
-        <!-- METHOD 1 -->
         <div class="ac">
           <h3 style="color:#15803d">Method 1 — NJ WaterCheck (Exact)</h3>
           <p style="margin-bottom:7px">Primary source for all systems that have a dedicated page on <strong>njwatercheck.com</strong>. The "Est. Population Served" field is pulled directly from NJDEP data and displayed on each system's detail page.</p>
           <p><strong>Systems confirmed this way:</strong></p>
           <ul>
-            <li>Belvidere → 2,644</li>
-            <li>New Egypt → 704</li>
-            <li>Homestead → 1,765</li>
-            <li>Twin Lakes → 120</li>
-            <li>Vincentown → 132</li>
-            <li>Egg Harbor City → 3,180</li>
-            <li>South Orange Village → 16,587</li>
-            <li>Penns Grove → 10,843</li>
-            <li>Roxbury → 14,135</li>
-            <li>Shorelands → 31,908</li>
-            <li>… and all large UCMR5 systems</li>
+            <li>Belvidere → 2,644</li><li>New Egypt → 704</li><li>Homestead → 1,765</li>
+            <li>Twin Lakes → 120</li><li>Vincentown → 132</li><li>Egg Harbor City → 3,180</li>
+            <li>South Orange Village → 16,587</li><li>Penns Grove → 10,843</li>
+            <li>Roxbury → 14,135</li><li>Shorelands → 31,908</li><li>… and all large UCMR5 systems</li>
           </ul>
         </div>
-        <!-- METHOD 2 -->
         <div class="ac">
           <h3 style="color:#c2410c">Method 2 — CCR PDF Daily Usage (Estimated)</h3>
           <p style="margin-bottom:7px">For systems not on NJ WaterCheck, each utility's official CCR PDF was fetched from <strong>amwater.com/ccr/[system].pdf</strong>. The "Quick Facts" section of every CCR lists:</p>
-          <ul>
-            <li>Communities served</li>
-            <li>Average daily water supplied (MGD)</li>
-          </ul>
+          <ul><li>Communities served</li><li>Average daily water supplied (MGD)</li></ul>
           <p style="margin-top:7px">Population is then estimated using the standard EPA per-capita consumption rate:</p>
           <div style="background:#f1f5f9;border-radius:6px;padding:8px 12px;font-family:monospace;font-size:11px;margin-top:7px;color:#0f172a">
             Pop ≈ Daily Usage (gallons) ÷ 100 gpcd<br>
@@ -301,14 +283,12 @@ tr.clickable:hover td{background:#f8faff;cursor:pointer}
           </div>
           <p style="margin-top:7px"><strong>Systems estimated this way</strong> are marked <strong>~</strong> in all tables.</p>
         </div>
-        <!-- METHOD 3 -->
         <div class="ac">
           <h3 style="color:#7e22ce">Method 3 — Municipality / Census Context</h3>
           <p>For a small number of systems where neither NJ WaterCheck nor CCR MGD data was available, population was estimated by cross-referencing the <strong>communities served</strong> listed in the CCR against NJ municipal census data.</p>
           <p style="margin-top:7px">Applied to: Salem, Shrewsbury-AVMA, Harrison, Cape May Court House, Ocean City.</p>
           <p style="margin-top:7px">These figures are approximate and also marked <strong>~</strong>.</p>
         </div>
-        <!-- PWSID METHOD -->
         <div class="ac">
           <h3 style="color:#185FA5">PWSID Confirmation</h3>
           <p>Every PWSID (Public Water System ID) was confirmed directly from the official CCR PDF cover page for each utility:</p>
@@ -320,7 +300,6 @@ tr.clickable:hover td{background:#f8faff;cursor:pointer}
           <p style="margin-top:7px">Cross-verified against NJDEP Drinking Water Watch and NJ WaterCheck system pages where available.</p>
         </div>
       </div>
-
       <div class="stitle">⚠ Limitations & Caveats</div>
       <div class="ac" style="margin-bottom:13px">
         <ul>
@@ -331,7 +310,6 @@ tr.clickable:hover td{background:#f8faff;cursor:pointer}
           <li><strong>MCL effective date:</strong> EPA PFAS MCLs (PFOA/PFOS = 4 ng/L) were finalized April 2024. Compliance required by 2026. All comparisons in this dashboard use the 2024 MCL values.</li>
         </ul>
       </div>
-
       <div style="background:#f0f9ff;border:1px solid #bae6fd;border-radius:8px;padding:11px 14px;font-size:10.5px;color:#0c4a6e;line-height:1.8">
         <strong>Primary Sources:</strong>
         EPA UCMR5 Data Finder (epa.gov/dwucmr) &nbsp;·&nbsp;
@@ -350,10 +328,12 @@ tr.clickable:hover td{background:#f8faff;cursor:pointer}
 
     <!-- MCL TABLE -->
     <div id="panel-mcltable" class="panel">
-      <div class="stitle">19 Utilities with MCL Exceedances — UCMR5 + CCR 2024 Combined</div>
+      <!-- CHANGED: title updated -->
+      <div class="stitle">19 Utilities with MCL Exceedances — Sorted by Max Concentration (Highest → Lowest)</div>
       <div class="ccrbox" style="margin-bottom:10px">⚠ <strong>Mixed sources:</strong> UCMR5 = EPA standardized data. CCR = utility self-reported 2024 annual report. CCR values shown as max of reported range.</div>
+      <!-- CHANGED: Source moved to last column, # column added -->
       <div class="tw"><table>
-        <thead><tr><th>Utility</th><th>PWSID</th><th>Source</th><th>Contaminant</th><th>Max Conc. (ng/L)</th><th>× MCL</th><th>Est. Pop.</th><th>County</th></tr></thead>
+        <thead><tr><th>#</th><th>Utility</th><th>PWSID</th><th>Contaminant</th><th>Max Conc. (ng/L)</th><th>× MCL</th><th>Est. Pop.</th><th>County</th><th>Source</th></tr></thead>
         <tbody id="mcltb"></tbody>
       </table></div>
     </div>
@@ -437,8 +417,6 @@ tr.clickable:hover td{background:#f8faff;cursor:pointer}
       <div class="npbox"><h3>✅ No PFAS Detected</h3><p>All 240 samples below MRL · Aug 2024 – Apr 2025</p></div>
     </div>
 
-    <!-- ===== CCR 2024 PANELS — generated by JS ===== -->
-
   </div>
 </div>
 
@@ -454,10 +432,7 @@ function nav(id,btn){
 }
 
 // ===== DATA =====
-// status: r=red(high), o=orange(marginal), g=green(below/no MCL), q=gray(no PFAS), na=purple(not in ucmr5)
-// ccrStatus: 'exceeds','detected','nd','na','nodata'
 const allU=[
-  // UCMR5 systems
   {n:'Camden City Water Dept (NJAW)',  id:'NJ0408001',co:'Camden',            p:'camden',      pop:71000,   approx:true, ucmr5:true, s:'r', ch:'PFOS', mx:12.9, mu:'3.2×'},
   {n:'NJAW — Atlantic County',         id:'NJ0119002',co:'Atlantic',           p:'atlantic',    pop:112076,              ucmr5:true, s:'r', ch:'PFOA', mx:10.9, mu:'2.7×'},
   {n:'NJAW — Short Hills',             id:'NJ0712001',co:'Essex',              p:'shorthills',  pop:217230,              ucmr5:true, s:'r', ch:'PFOA', mx:9.1,  mu:'2.3×'},
@@ -472,12 +447,11 @@ const allU=[
   {n:'NJAW — Little Falls',            id:'NJ1605001',co:'Passaic',            p:'littlefalls', pop:16675,               ucmr5:true, s:'o', ch:'PFOA', mx:4.5,  mu:'1.1×'},
   {n:'NJAW — Logan',                   id:'NJ0809002',co:'Gloucester',         p:'logan',       pop:3762,                ucmr5:true, s:'o', ch:'PFOA', mx:4.2,  mu:'1.0×'},
   {n:'NJAW — Delaware/Western',        id:'NJ0327001',co:'Burlington/Camden',  p:'western',     pop:314046,              ucmr5:true, s:'g', ch:'PFHxA',mx:3.1,  mu:'No MCL', noMcl:true},
-  {n:'NJAW — Harrison',                id:'NJ0808001',co:'Hudson',             p:'harrison',    pop:18000,   approx:true, ucmr5:true, s:'q', none:true},
-  {n:'NJAW — Cape May Court House',    id:'NJ0506010',co:'Cape May',           p:'capemay',     pop:10000,   approx:true, ucmr5:true, s:'q', none:true},
-  {n:'NJAW — Ocean City',              id:'NJ0508001',co:'Cape May',           p:'oceancity',   pop:25000,   approx:true, ucmr5:true, s:'q', none:true},
-  {n:'NJAW — Penns Grove',             id:'NJ1707001',co:'Salem',              p:'pennsgrove',  pop:10843,               ucmr5:true, s:'q', none:true},
-  {n:'NJAW — Roxbury',                 id:'NJ1436002',co:'Morris',             p:'roxbury',     pop:14135,               ucmr5:true, s:'q', none:true},
-  // CCR 2024 systems — Exceeds MCL
+  {n:'NJAW — Harrison',                id:'NJ0808001',co:'Hudson',             p:'harrison',    pop:18000,   approx:true, ucmr5:true, s:'q', none:true, mx:0},
+  {n:'NJAW — Cape May Court House',    id:'NJ0506010',co:'Cape May',           p:'capemay',     pop:10000,   approx:true, ucmr5:true, s:'q', none:true, mx:0},
+  {n:'NJAW — Ocean City',              id:'NJ0508001',co:'Cape May',           p:'oceancity',   pop:25000,   approx:true, ucmr5:true, s:'q', none:true, mx:0},
+  {n:'NJAW — Penns Grove',             id:'NJ1707001',co:'Salem',              p:'pennsgrove',  pop:10843,               ucmr5:true, s:'q', none:true, mx:0},
+  {n:'NJAW — Roxbury',                 id:'NJ1436002',co:'Morris',             p:'roxbury',     pop:14135,               ucmr5:true, s:'q', none:true, mx:0},
   {n:'NJAW — Four Seasons at Chester', id:'NJ1407001',co:'Morris',             p:'fourseasons', pop:500,     approx:true, ucmr5:false, s:'r',
    ccrPFOA:'ND – 9.0', ccrPFOS:'ND – 8.0', ccrPFNA:null, ccrMaxPFOA:9.0, ccrMaxPFOS:8.0, ccrStatus:'exceeds'},
   {n:'NJAW — West Jersey',             id:'NJ1427009',co:'Morris',             p:'westjersey',  pop:2000,    approx:true, ucmr5:false, s:'r',
@@ -490,17 +464,14 @@ const allU=[
    ccrPFOA:'ND – 6.0', ccrPFOS:'ND – 5.0', ccrPFNA:null, ccrMaxPFOA:6.0, ccrMaxPFOS:5.0, ccrStatus:'exceeds'},
   {n:'NJAW — Salem',                   id:'NJ1712001',co:'Salem',              p:'salem',       pop:5000,    approx:true, ucmr5:false, s:'o',
    ccrPFOA:'4.1 – 5.6', ccrPFOS:null, ccrPFNA:'2.9 – 5.1', ccrMaxPFOA:5.6, ccrMaxPFOS:null, ccrMaxPFNA:5.1, ccrStatus:'exceeds'},
-  // CCR — detected below MCL
   {n:'NJAW — Bridgeport',              id:'NJ0809001',co:'Gloucester',         p:'bridgeport',  pop:500,     approx:true, ucmr5:false, s:'g',
    ccrPFOA:'ND – 3.9', ccrPFOS:null, ccrPFNA:null, ccrMaxPFOA:3.9, ccrMaxPFOS:null, ccrStatus:'detected'},
   {n:'NJAW — Frenchtown',              id:'NJ1011001',co:'Hunterdon',          p:'frenchtown',  pop:1500,    approx:true, ucmr5:false, s:'g',
    ccrPFOA:'ND – 3.0', ccrPFOS:'ND – 2.0', ccrPFNA:null, ccrMaxPFOA:3.0, ccrMaxPFOS:2.0, ccrStatus:'detected'},
-  // CCR — not detected / NA
   {n:'NJAW — Belvidere',               id:'NJ2103001',co:'Warren',             p:'belvidere',   pop:2644,                ucmr5:false, s:'q',
    ccrPFOA:'NA', ccrPFOS:null, ccrPFNA:null, ccrStatus:'nd'},
   {n:'NJAW — Crossroads at Oldwick',   id:'NJ1024001',co:'Hunterdon',          p:'crossroads',  pop:200,     approx:true, ucmr5:false, s:'q',
    ccrPFOA:'NA', ccrPFOS:null, ccrPFNA:null, ccrStatus:'nd'},
-  // CCR — no data
   {n:'NJAW — Deep Run',                id:'NJ1523002',co:'Ocean',              p:'deeprun',     pop:300,     approx:true, ucmr5:false, s:'x', ccrStatus:'nodata'},
   {n:'NJAW — Egg Harbor City',         id:'NJ0107001',co:'Atlantic',           p:'eggharbor',   pop:3180,                ucmr5:false, s:'x', ccrStatus:'nodata'},
   {n:'NJAW — Homestead',               id:'NJ0318002',co:'Burlington',         p:'homestead',   pop:1765,                ucmr5:false, s:'x', ccrStatus:'nodata'},
@@ -510,13 +481,23 @@ const allU=[
   {n:'NJAW — Vincentown',              id:'NJ0333004',co:'Burlington',         p:'vincentown',  pop:132,                 ucmr5:false, s:'x', ccrStatus:'nodata'},
 ];
 
-// ===== OVERVIEW TABLE =====
-const ovtb=document.getElementById('ovtb');
-allU.forEach((u,i)=>{
-  const srcBadge=u.ucmr5?
-    '<span style="background:#dbeafe;color:#1d4ed8;padding:1px 5px;border-radius:3px;font-size:9px;font-weight:700">UCMR5</span>':
-    '<span style="background:#fef9c3;color:#92400e;padding:1px 5px;border-radius:3px;font-size:9px;font-weight:700">CCR 2024</span>';
+// helper: numeric sort value
+function getSortVal(u){
+  if(u.ucmr5) return u.mx||0;
+  return Math.max(u.ccrMaxPFOA||0, u.ccrMaxPFOS||0, u.ccrMaxPFNA||0);
+}
 
+// helper: source badge
+function srcBadge(u){
+  return u.ucmr5
+    ? '<span style="background:#dbeafe;color:#1d4ed8;padding:1px 5px;border-radius:3px;font-size:9px;font-weight:700">UCMR5</span>'
+    : '<span style="background:#fef9c3;color:#92400e;padding:1px 5px;border-radius:3px;font-size:9px;font-weight:700">CCR 2024</span>';
+}
+
+// ===== OVERVIEW TABLE — sorted by max conc desc =====
+const ovSorted=[...allU].sort((a,b)=>getSortVal(b)-getSortVal(a));
+const ovtb=document.getElementById('ovtb');
+ovSorted.forEach((u,i)=>{
   let contaminant='<span style="color:#94a3b8">—</span>';
   let maxConc='<span style="color:#94a3b8">—</span>';
   let muStr='<span style="color:#94a3b8">—</span>';
@@ -534,8 +515,8 @@ allU.forEach((u,i)=>{
       muStr='No MCL';
       chip='<span class="chip cg">Detected / No MCL</span>';
     } else {
-      contaminant=`<b style="color:#185FA5">${u.ch}</b>`;
       const ex=u.s==='r';
+      contaminant=`<b style="color:#185FA5">${u.ch}</b>`;
       maxConc=`<span class="${ex?'ccrr':'ccro'} chip">${u.mx}</span>`;
       muStr=`<span style="font-weight:700;color:${ex?'#b91c1c':'#c2410c'}">${u.mu}</span>`;
       chip=ex?'<span class="chip cr">⚠ Exceeds MCL</span>':'<span class="chip co">⚠ Exceeds MCL</span>';
@@ -552,7 +533,6 @@ allU.forEach((u,i)=>{
       muStr='—';
       chip='<span class="chip cq">✓ ND / NA</span>';
     } else {
-      // find highest contaminant
       const candidates=[
         {name:'PFOA',val:u.ccrMaxPFOA||0,mcl:4,range:u.ccrPFOA},
         {name:'PFOS',val:u.ccrMaxPFOS||0,mcl:4,range:u.ccrPFOS},
@@ -572,29 +552,31 @@ allU.forEach((u,i)=>{
   const tr=document.createElement('tr');
   tr.className='clickable';
   tr.onclick=()=>nav(u.p);
+  // CHANGED: Source moved to last column
   tr.innerHTML=`<td style="color:#94a3b8;font-size:9px">${i+1}</td>
     <td><strong style="font-size:10px">${u.n}</strong></td>
     <td class="pw">${u.id}</td>
     <td style="font-size:10px">${u.co}</td>
-    <td>${srcBadge}</td>
     <td>${contaminant}</td>
     <td>${maxConc}</td>
     <td>${muStr}</td>
     <td style="font-size:10px">${popTxt}</td>
-    <td>${chip}</td>`;
+    <td>${chip}</td>
+    <td>${srcBadge(u)}</td>`;
   ovtb.appendChild(tr);
 });
 
-// ===== MCL TABLE =====
+// ===== MCL TABLE — sorted by max conc desc =====
 const mclList=allU.filter(u=>{
   if(u.ucmr5) return !u.none&&!u.noMcl;
   return u.ccrStatus==='exceeds';
-});
+}).sort((a,b)=>getSortVal(b)-getSortVal(a));
+
 const mcltb=document.getElementById('mcltb');
-mclList.forEach(u=>{
-  let maxV,contam,mxMCL,ratio,srcBadge;
+mclList.forEach((u,i)=>{
+  let maxV,contam,mxMCL,ratio;
   if(u.ucmr5){
-    maxV=u.mx; contam=u.ch; ratio=u.mu; srcBadge='UCMR5';
+    maxV=u.mx; contam=u.ch; ratio=u.mu;
   } else {
     maxV=Math.max(u.ccrMaxPFOA||0,u.ccrMaxPFOS||0,u.ccrMaxPFNA||0);
     if(u.ccrMaxPFOA===maxV) contam='PFOA (max range)';
@@ -602,22 +584,21 @@ mclList.forEach(u=>{
     else contam='PFNA (max range)';
     const mcl=u.ccrMaxPFNA&&u.ccrMaxPFNA===maxV?10:4;
     ratio=(maxV/mcl).toFixed(1)+'×';
-    srcBadge='CCR 2024';
   }
   const bc=maxV>=9?'#E24B4A':maxV>=6?'#EF9F27':'#639922';
   const mc=maxV>=9?'#A32D2D':maxV>=6?'#854F0B':'#3B6D11';
   const pct=Math.min(100,maxV/12.9*100);
-  const srcC=u.ucmr5?'#1d4ed8':'#92400e';
-  const srcBg=u.ucmr5?'#dbeafe':'#fef9c3';
   const tr=document.createElement('tr');
-  tr.innerHTML=`<td><strong style="font-size:10px">${u.n}</strong></td>
+  // CHANGED: # column added, Source moved to last column
+  tr.innerHTML=`<td style="color:#94a3b8;font-size:9px">${i+1}</td>
+    <td><strong style="font-size:10px">${u.n}</strong></td>
     <td class="pw">${u.id}</td>
-    <td><span style="background:${srcBg};color:${srcC};padding:1px 5px;border-radius:3px;font-size:9px;font-weight:700">${srcBadge}</span></td>
     <td><b style="color:#185FA5;font-size:10px">${contam}</b></td>
     <td><div class="br"><span style="min-width:30px;font-size:10px">${maxV}</span><div class="bb" style="width:80px"><div class="bf" style="width:${pct}%;background:${bc}"></div></div><span style="font-size:8.5px;color:#94a3b8">MCL=4</span></div></td>
     <td style="font-weight:700;color:${mc};font-size:10px">${ratio}</td>
     <td style="font-size:10px">${(u.approx?'~':'')+u.pop.toLocaleString()}</td>
-    <td style="font-size:10px">${u.co}</td>`;
+    <td style="font-size:10px">${u.co}</td>
+    <td>${srcBadge(u)}</td>`;
   mcltb.appendChild(tr);
 });
 
@@ -710,7 +691,6 @@ function initMap(){
     {n:"NJAW — Liberty (Elizabeth)",id:"NJ2004001",ch:"PFOA",mx:4.5,mu:"1.1×",pop:"128,124",lat:40.664,lng:-74.2107,src:'UCMR5'},
     {n:"NJAW — Little Falls",id:"NJ1605001",ch:"PFOA",mx:4.5,mu:"1.1×",pop:"16,675",lat:40.8787,lng:-74.2126,src:'UCMR5'},
     {n:"NJAW — Logan",id:"NJ0809002",ch:"PFOA",mx:4.2,mu:"1.0×",pop:"3,762",lat:39.7373,lng:-75.2732,src:'UCMR5'},
-    // CCR exceeds MCL
     {n:"NJAW — Four Seasons at Chester",id:"NJ1407001",ch:"PFOA",mx:9.0,mu:"2.3× (CCR)",pop:"~500",lat:40.7785,lng:-74.6879,src:'CCR'},
     {n:"NJAW — West Jersey",id:"NJ1427009",ch:"PFOA",mx:9.0,mu:"2.3× (CCR)",pop:"~2,000",lat:40.8650,lng:-74.7300,src:'CCR'},
     {n:"NJAW — Shrewsbury AVMA",id:"NJ1346001",ch:"PFOA",mx:6.8,mu:"1.7× (CCR)",pop:"~1,000",lat:40.3274,lng:-74.0643,src:'CCR'},
@@ -790,7 +770,6 @@ function mkChart(cid,title,color,data,mcl){
   const cc=document.createElement('div');cc.className='cc';cc.innerHTML=s;el.appendChild(cc);
 }
 
-// UCMR5 charts
 mkChart('ch-camden','PFOA (MCL 4)','#ec4899',[{x:'Aug 24',y:10.6},{x:'Dec 24',y:8.1}],4);
 mkChart('ch-camden','PFOS (MCL 4)','#92400e',[{x:'Aug 24',y:12.9},{x:'Dec 24',y:11.7}],4);
 mkChart('ch-camden','PFNA (MCL 10)','#0d9488',[{x:'Aug 24',y:6.2},{x:'Dec 24',y:6.1}],10);
